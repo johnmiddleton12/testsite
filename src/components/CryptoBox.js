@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
-import { connectWallet, getCurrentWalletConnected } from "../utils/connect";
+import {
+    connectWallet,
+    getCurrentWalletConnected,
+    Balance,
+} from "../utils/connect";
 
 const ConnectBtn = () => {
     const [walletAddress, setWallet] = useState("");
     const [status, setStatus] = useState("");
+    const [balance, setBalance] = useState(0);
 
     useEffect(() => {
         async function fetchData() {
@@ -15,6 +20,12 @@ const ConnectBtn = () => {
         }
         fetchData();
     }, []);
+
+    useEffect(() => {
+
+        Balance(walletAddress, setBalance);
+
+    }, [walletAddress]);
 
     const connectWalletPressed = async () => {
         const walletResponse = await connectWallet();
@@ -30,9 +41,7 @@ const ConnectBtn = () => {
                     setStatus("Use the above button to mint your NFT!");
                 } else {
                     setWallet("");
-                    setStatus(
-                        "🦊 Connect to Metamask using button below."
-                    );
+                    setStatus("🦊 Connect to Metamask using button below.");
                 }
             });
         } else {
@@ -55,8 +64,14 @@ const ConnectBtn = () => {
 
     return (
         <div className="crypto-box">
-
             <p id="status">{status}</p>
+
+                <p
+                    className="balance"
+                >
+                    <strong>Balance: </strong>
+                    {balance}
+                </p>
 
             <button onClick={connectWalletPressed} className="btn btn-connect">
                 {walletAddress.length > 0 ? (
