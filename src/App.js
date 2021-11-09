@@ -1,7 +1,13 @@
 import { useState } from "react";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import About from "./components/About";
+
+import CryptoBox from "./components/CryptoBox";
 
 const App = () => {
     const [showAdd, setShowAdd] = useState(false);
@@ -45,9 +51,15 @@ const App = () => {
     };
 
     return (
+      <Router>
         <div className="container">
             <Header title="Hello" showAdd={showAdd} setShow={() => setShowAdd(!showAdd)}/>
 
+        <Routes>
+
+            <Route path="/"
+            element={
+            <>
             {showAdd && <AddTask onAdd={addTask} />}
 
             {tasks.length > 0 ? (
@@ -59,7 +71,19 @@ const App = () => {
             ) : (
                 <h1>No tasks</h1>
             )}
+
+            </>
+            }/>
+
+            <Route path='/about' element={<About />} />
+
+        </Routes>
+
+            <CryptoBox />
+
+            <Footer />
         </div>
+      </Router>
     );
 };
 
