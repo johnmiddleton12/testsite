@@ -52,6 +52,7 @@ body {
 
 .btn-connect {
   background: steelblue;
+  border-radius: 10px;
 }
 
 .btn:focus {
