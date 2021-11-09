@@ -25,7 +25,7 @@ const CryptoBox = () => {
             addChainListener();
         }
         fetchData();
-    }, []);
+    }, [walletAddress]);
 
     useEffect(() => {
         Balance(walletAddress, setBalance);
