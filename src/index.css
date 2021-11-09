@@ -53,6 +53,7 @@ body {
 .btn-connect {
   background: steelblue;
   border-radius: 10px;
+  font-family: inherit;
 }
 
 .btn:focus {
