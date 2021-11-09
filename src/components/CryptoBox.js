@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {
     connectWallet,
     getCurrentWalletConnected,
+    getCurrentChain,
     Balance,
 } from "../utils/connect";
 
@@ -17,6 +18,9 @@ const ConnectBtn = () => {
             setStatus(status);
 
             addWalletListener();
+            const { chainStatus } = await getCurrentChain();
+            setStatus(chainStatus);
+            addChainListener();
         }
         fetchData();
     }, []);
@@ -25,7 +29,7 @@ const ConnectBtn = () => {
 
         Balance(walletAddress, setBalance);
 
-    }, [walletAddress]);
+    }, [walletAddress, status]);
 
     const connectWalletPressed = async () => {
         const walletResponse = await connectWallet();
@@ -61,6 +65,20 @@ const ConnectBtn = () => {
             );
         }
     }
+
+    function addChainListener() {
+        if (window.ethereum) {
+            window.ethereum.on("chainChanged", (chainId) => {
+                if (parseInt(chainId, 16) !== 1) {
+                    setStatus("🦊 Connect to the main Ethereum network.");
+                }
+                else {
+                    setStatus("Use the above button to mint your NFT!");
+                }
+            });
+        }
+    }
+
 
     return (
         <div className="crypto-box">

@@ -13,6 +13,8 @@ export const Balance = (walletAddress, setBalance) => {
                 setBalance(web3.utils.fromWei(wei, "ether").substring(0, 6));
             }
         });
+    } else {
+        setBalance("0");
     }
 };
 
@@ -23,7 +25,7 @@ export const connectWallet = async () => {
                 method: "eth_requestAccounts",
             });
             const obj = {
-                status: "Use the button above to mint your NFT!",
+                status: "Use the above button to mint your NFT!",
                 address: addressArray[0],
             };
             return obj;
@@ -65,7 +67,7 @@ export const getCurrentWalletConnected = async () => {
             if (addressArray.length > 0) {
                 return {
                     address: addressArray[0],
-                    status: "Use the button above to mint your NFT!",
+                    status: "Use the above button to mint your NFT!",
                 };
             } else {
                 return {
@@ -99,5 +101,29 @@ export const getCurrentWalletConnected = async () => {
                 </span>
             ),
         };
+    }
+};
+
+export const getCurrentChain = async () => {
+    if (window.ethereum) {
+        try {
+            const chainId = await window.ethereum.request({
+                method: "eth_chainId",
+            });
+
+            if (parseInt(chainId, 16) === 1) {
+                return {
+                  chainStatus: "Use the above button to mint your NFT!"
+                };
+            } else {
+                return {
+                    chainStatus: "🦊 Connect to the main Ethereum network",
+                };
+            }
+        } catch (err) {
+            return {
+                status: "😥 " + err.message,
+            };
+        }
     }
 };
