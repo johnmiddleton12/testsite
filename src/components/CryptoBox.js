@@ -31,7 +31,7 @@ const ConnectBtn = () => {
                 } else {
                     setWallet("");
                     setStatus(
-                        "🦊 Connect to Metamask using the top right button."
+                        "🦊 Connect to Metamask using button below."
                     );
                 }
             });
