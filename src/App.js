@@ -57,7 +57,7 @@ const App = () => {
 
         <Routes>
 
-            <Route path="/"
+            <Route path="/testsite/"
             element={
             <>
             {showAdd && <AddTask onAdd={addTask} />}
@@ -75,7 +75,7 @@ const App = () => {
             </>
             }/>
 
-            <Route path='/about' element={<About />} />
+            <Route path='/testsite/about' element={<About />} />
 
         </Routes>
 
