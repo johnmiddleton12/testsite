@@ -9,6 +9,10 @@ import About from "./components/About";
 
 import CryptoBox from "./components/CryptoBox";
 
+import ThreeBox from "./components/ThreeBox";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei"
+
 const App = () => {
     const [showAdd, setShowAdd] = useState(false);
     const [tasks, setTasks] = useState([
@@ -78,6 +82,25 @@ const App = () => {
             <Route path='/about' element={<About />} />
 
         </Routes>
+
+            <div
+            style={{
+              display: "flex",
+              justifyContent: "center", 
+            }}
+            >
+            <Canvas
+            style={{
+              width: "90%",
+            }}
+            >
+              <ambientLight />
+              <pointLight position={[5, 8, 0]} />
+              <ThreeBox position={[-1.2, 0, 0]}/>
+              <OrbitControls/>
+            </Canvas>
+
+            </div>
 
             <CryptoBox />
 
