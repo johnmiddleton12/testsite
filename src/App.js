@@ -54,16 +54,22 @@ const App = () => {
         );
     };
 
+    const showTasks = false;
+
     return (
       <Router>
         <div className="container">
-            <Header title="Hello" showAdd={showAdd} setShow={() => setShowAdd(!showAdd)}/>
+            <Header 
+            showAdd={showAdd}
+            setShow={() => setShowAdd(!showAdd)}
+            addEnabled={showTasks}
+            />
 
         <Routes>
 
             <Route path="/"
-            element={
-            <>
+            element=
+              {showTasks  &&             <>
             {showAdd && <AddTask onAdd={addTask} />}
 
             {tasks.length > 0 ? (
@@ -76,8 +82,8 @@ const App = () => {
                 <h1>No tasks</h1>
             )}
 
-            </>
-            }/>
+            </> } 
+            />
 
             <Route path='/about' element={<About />} />
 

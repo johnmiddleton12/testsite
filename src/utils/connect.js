@@ -25,7 +25,7 @@ export const connectWallet = async () => {
                 method: "eth_requestAccounts",
             });
             const obj = {
-                status: "Use the above button to mint your NFT!",
+                status: "Click the above box to mint your NFT!",
                 address: addressArray[0],
             };
             return obj;
@@ -67,7 +67,7 @@ export const getCurrentWalletConnected = async () => {
             if (addressArray.length > 0) {
                 return {
                     address: addressArray[0],
-                    status: "Use the above button to mint your NFT!",
+                    status: "Click the above box to mint your NFT!",
                 };
             } else {
                 return {
@@ -113,7 +113,7 @@ export const getCurrentChain = async () => {
 
             if (parseInt(chainId, 16) === 1) {
                 return {
-                  chainStatus: "Use the above button to mint your NFT!"
+                  chainStatus: "Click the above box to mint your NFT!"
                 };
             } else {
                 return {

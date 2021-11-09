@@ -42,7 +42,7 @@ const CryptoBox = () => {
             window.ethereum.on("accountsChanged", (accounts) => {
                 if (accounts.length > 0) {
                     setWallet(accounts[0]);
-                    setStatus("Use the above button to mint your NFT!");
+                    setStatus("Click the above box to mint your NFT!");
                 } else {
                     setWallet("");
                     setStatus("🦊 Connect to Metamask using button below.");
@@ -72,7 +72,7 @@ const CryptoBox = () => {
                 if (parseInt(chainId, 16) !== 1) {
                     setStatus("🦊 Connect to the main Ethereum network.");
                 } else {
-                    setStatus("Use the above button to mint your NFT!");
+                    setStatus("Click the above box to mint your NFT!");
                 }
             });
         }
