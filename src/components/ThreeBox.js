@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
+import { mint } from "./Mint";
 
 const ThreeBox = () => {
     const ref = useRef();

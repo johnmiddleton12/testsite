@@ -2,38 +2,49 @@ import { useState, useEffect } from "react";
 import {
     connectWallet,
     getCurrentWalletConnected,
-    getCurrentChain,
     Balance,
 } from "../utils/connect";
 
 const CryptoBox = () => {
     const [walletAddress, setWallet] = useState("");
+    const [chainId, setChainId] = useState(0);
     const [status, setStatus] = useState("");
     const [balance, setBalance] = useState(0);
 
     useEffect(() => {
         async function fetchData() {
-            const { address, status } = await getCurrentWalletConnected();
+            const { address, chain } = await getCurrentWalletConnected();
             setWallet(address);
-            setStatus(status);
+            setChainId(chain);
 
             addWalletListener();
-
-            const { chainStatus } = await getCurrentChain();
-            setStatus(chainStatus);
-
             addChainListener();
         }
         fetchData();
-    }, [walletAddress]);
+    }, []);
 
     useEffect(() => {
         Balance(walletAddress, setBalance);
     }, [walletAddress, status]);
 
+    useEffect(() => {
+        if (window.ethereum) {
+            if (walletAddress.length > 0) {
+                if (parseInt(chainId, 16) === 1) {
+                    setStatus("Click the box above to mint 👆");
+                } else {
+                    setStatus("Switch to Ethereum Mainnet 🙏");
+                }
+            } else {
+                setStatus("Click below to connect to Metamask 🦊");
+            }
+        } else {
+            setStatus("Install the Metamask extension.");
+        }
+    }, [walletAddress, chainId]);
+
     const connectWalletPressed = async () => {
         const walletResponse = await connectWallet();
-        setStatus(walletResponse.status);
         setWallet(walletResponse.address);
     };
 
@@ -42,38 +53,17 @@ const CryptoBox = () => {
             window.ethereum.on("accountsChanged", (accounts) => {
                 if (accounts.length > 0) {
                     setWallet(accounts[0]);
-                    setStatus("Click the above box to mint your NFT!");
                 } else {
                     setWallet("");
-                    setStatus("🦊 Connect to Metamask using button below.");
                 }
             });
-        } else {
-            setStatus(
-                <p>
-                    {" "}
-                    🦊{" "}
-                    <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={`https://metamask.io/download.html`}
-                    >
-                        You must install Metamask, a virtual Ethereum wallet, in
-                        your browser.
-                    </a>
-                </p>
-            );
-        }
+        } 
     }
 
     function addChainListener() {
         if (window.ethereum) {
-            window.ethereum.on("chainChanged", (chainId) => {
-                if (parseInt(chainId, 16) !== 1) {
-                    setStatus("🦊 Connect to the main Ethereum network.");
-                } else {
-                    setStatus("Click the above box to mint your NFT!");
-                }
+            window.ethereum.on("chainChanged", (ChainID) => {
+                setChainId(ChainID);
             });
         }
     }

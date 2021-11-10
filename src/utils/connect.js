@@ -25,105 +25,62 @@ export const connectWallet = async () => {
                 method: "eth_requestAccounts",
             });
             const obj = {
-                status: "Click the above box to mint your NFT!",
                 address: addressArray[0],
             };
             return obj;
         } catch (err) {
             return {
                 address: "",
-                status: "😥 " + err.message,
             };
         }
     } else {
         return {
             address: "",
-            status: (
-                <span>
-                    <p>
-                        {" "}
-                        🦊{" "}
-                        <a
-                            target="_blank"
-                            href={`https://metamask.io/download.html`}
-                            rel="noreferrer"
-                        >
-                            You must install Metamask, a virtual Ethereum
-                            wallet, in your browser.
-                        </a>
-                    </p>
-                </span>
-            ),
         };
     }
 };
 
+// Check if wallet is connected on load
 export const getCurrentWalletConnected = async () => {
     if (window.ethereum) {
         try {
+            // fetch addresses in injected web3 provider
             const addressArray = await window.ethereum.request({
                 method: "eth_accounts",
             });
+            // fetch chainId of injected web3 provider
+            const chainId = await window.ethereum.request({
+                method: "eth_chainId",
+            });
+
             if (addressArray.length > 0) {
-                return {
-                    address: addressArray[0],
-                    status: "Click the above box to mint your NFT!",
-                };
+                if (parseInt(chainId, 16) === 1) {
+                    return {
+                        address: addressArray[0],
+                        chain: chainId,
+                    };
+                } else {
+                    return {
+                        address: addressArray[0],
+                        chain: chainId,
+                    };
+                }
             } else {
                 return {
                     address: "",
-                    status: "🦊 Connect to Metamask using the button below.",
+                    chain: 0,
                 };
             }
         } catch (err) {
             return {
                 address: "",
-                status: "😥 " + err.message,
+                chain: 0,
             };
         }
     } else {
         return {
             address: "",
-            status: (
-                <span>
-                    <p>
-                        {" "}
-                        🦊{" "}
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href={`https://metamask.io/download.html`}
-                        >
-                            You must install Metamask, a virtual Ethereum
-                            wallet, in your browser.
-                        </a>
-                    </p>
-                </span>
-            ),
+            chain: 0,
         };
-    }
-};
-
-export const getCurrentChain = async () => {
-    if (window.ethereum) {
-        try {
-            const chainId = await window.ethereum.request({
-                method: "eth_chainId",
-            });
-
-            if (parseInt(chainId, 16) === 1) {
-                return {
-                  chainStatus: "Click the above box to mint your NFT!"
-                };
-            } else {
-                return {
-                    chainStatus: "🦊 Connect to the main Ethereum network",
-                };
-            }
-        } catch (err) {
-            return {
-                status: "😥 " + err.message,
-            };
-        }
     }
 };
