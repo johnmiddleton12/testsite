@@ -14,6 +14,9 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei"
 
 const App = () => {
+
+    const [walletAddress, setWallet] = useState("");
+
     const [showAdd, setShowAdd] = useState(false);
     const [tasks, setTasks] = useState([
         {
@@ -102,13 +105,19 @@ const App = () => {
             >
               <ambientLight />
               <pointLight position={[5, 8, 0]} />
-              <ThreeBox position={[-1.2, 0, 0]}/>
+              <ThreeBox 
+                position={[-1.2, 0, 0]}
+                walletAddress={walletAddress}
+              />
               <OrbitControls/>
             </Canvas>
 
             </div>
 
-            <CryptoBox />
+            <CryptoBox
+              walletAddress={walletAddress}
+              setWallet={setWallet}
+            />
 
             <Footer />
         </div>

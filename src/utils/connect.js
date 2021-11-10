@@ -1,23 +1,3 @@
-const Web3 = require("web3");
-
-const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
-
-export const Balance = (walletAddress, setBalance) => {
-    console.log(walletAddress);
-
-    if (walletAddress.length > 0) {
-        web3.eth.getBalance(walletAddress, (err, wei) => {
-            if (err) {
-                console.log(err);
-            } else {
-                setBalance(web3.utils.fromWei(wei, "ether").substring(0, 6));
-            }
-        });
-    } else {
-        setBalance("0");
-    }
-};
-
 export const connectWallet = async () => {
     if (window.ethereum) {
         try {

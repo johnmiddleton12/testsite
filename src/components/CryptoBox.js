@@ -2,26 +2,26 @@ import { useState, useEffect } from "react";
 import {
     connectWallet,
     getCurrentWalletConnected,
-    Balance,
 } from "../utils/connect";
+import {
+    Balance,
+} from "./Mint";
 
-const CryptoBox = () => {
-    const [walletAddress, setWallet] = useState("");
+const CryptoBox = ({ walletAddress, setWallet }) => {
+
     const [chainId, setChainId] = useState(0);
     const [status, setStatus] = useState("");
     const [balance, setBalance] = useState(0);
 
-    useEffect(() => {
-        async function fetchData() {
-            const { address, chain } = await getCurrentWalletConnected();
-            setWallet(address);
-            setChainId(chain);
+    const fetchData = async () => {
+        const { address, chain } = await getCurrentWalletConnected();
+        setWallet(address);
+        setChainId(chain);
 
-            addWalletListener();
-            addChainListener();
-        }
-        fetchData();
-    }, []);
+        addWalletListener();
+        addChainListener();
+    };
+    fetchData();
 
     useEffect(() => {
         Balance(walletAddress, setBalance);

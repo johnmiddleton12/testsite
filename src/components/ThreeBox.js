@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { mint } from "./Mint";
 
-const ThreeBox = () => {
+const ThreeBox = ({ walletAddress }) => {
     const ref = useRef();
 
     const [hovered, hover] = useState(false);
@@ -27,6 +27,14 @@ const ThreeBox = () => {
             onClick={(event) => {
                 setSpeed(5 / speed);
                 click(!clicked);
+                mint({walletAddress}).then(() => {
+                    click(false);
+                    console.log("minted");
+                }, 
+                () => {
+                    click(false);
+                    console.log("mint failed");
+                });
             }}
             onDoubleClick={(event) => doubleClicked()}
             onPointerOver={(event) => hover(true)}
