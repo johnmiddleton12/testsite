@@ -25,13 +25,15 @@ const ThreeBox = ({ walletAddress }) => {
             scale={clicked ? 1.1 : 1}
             // onClick={(event) => click(!clicked)}
             onClick={(event) => {
-                setSpeed(5 / speed);
+                setSpeed(9 / speed);
                 click(!clicked);
                 mint({walletAddress}).then(() => {
+                    setSpeed(1);
                     click(false);
                     console.log("minted");
                 }, 
                 () => {
+                    setSpeed(1);
                     click(false);
                     console.log("mint failed");
                 });
