@@ -2,6 +2,8 @@ import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { mint } from "./Mint";
 
+import { ThreeHtml } from "./ThreeHtml"
+
 const ThreeBox = ({ walletAddress }) => {
     const ref = useRef();
 
@@ -44,6 +46,9 @@ const ThreeBox = ({ walletAddress }) => {
         >
             <boxGeometry args={[3, 3, 3]} />
             <meshStandardMaterial color={hovered ? (clicked ? "lightpink" : "hotpink") : (clicked ? "steelBlue" : "orange")} />
+
+            {/* <ThreeHtml clicked={clicked}/> */}
+
         </mesh>
     );
 };

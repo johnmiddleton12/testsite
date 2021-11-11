@@ -104,7 +104,8 @@ const App = () => {
             }}
             >
               <ambientLight />
-              <pointLight position={[5, 8, 0]} />
+              <pointLight position={[0, 9, 0]} />
+              <pointLight position={[2, 0, 4]} />
               <ThreeBox 
                 position={[-1.2, 0, 0]}
                 walletAddress={walletAddress}
